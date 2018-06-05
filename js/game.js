@@ -1,45 +1,34 @@
 function Game(canvasElement) {
     this.ctx = canvasElement.getContext("2d");
-    this.cards = [
-        // new Card(this.ctx,1, 0, 0),
-        // new Card(this.ctx,2, 59, 0),
-        // new Card(this.ctx,3, 118, 0),
-        // new Card(this.ctx,1, 0, 80),
-        // new Card(this.ctx,2, 59,80),
-        // new Card(this.ctx,3, 118, 80),
-        // new Card(this.ctx,1, 0, 160),
-        // new Card(this.ctx,2, 59,160),
-        // new Card(this.ctx,3, 118, 160)
-    ];
-    for (var i = 0; i < 4 ; i++) {
-        for (var j = 0; j < 3; j++) {
+    this.cards = [];
+    this.clickedCards = [];
+    
+    this.generateCards();
+    
+};
+
+Game.prototype.generateCards = function() {
+    for (var i = 0; i < this.ctx.canvas.width / 60 ; i++) {
+        for (var j = 0; j < this.ctx.canvas.height / 80 ; j++) {
             var x = i * 60;
             var y = j * 80;
-            var id = 1;
+            var id =  Math.floor(Math.random() * 9 + 1);
             var card = new Card (this.ctx, id, x, y)
             this.cards.push(card);
+
         }
 
     }
-};
+}
 
-// var cardRandom = [1,1,1,1,2,2,2,2,3,3,3,3];
-// for (var i = 0; i < 4 ; i++) {
-//     for (var j = 0; j < 3; j++) {
-//         var x = i * 60;
-//         var y = j * 80;
-//         var position = Math.floor(Math.random() * cardRandom.length);
-//         var card = new Card (this.ctx, cardRandom [position], x, y);
-//         this.cards.push(card);
-//         delete cardRandom [position];
-//     }
+Game.prototype.clear = function() {
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
 
-// }
-
+}
 
 Game.prototype.start = function() {
-
     this.intervalId = setInterval(function() {
+        this.clear();
         this.drawAll();
       }.bind(this), 16);
 
@@ -54,33 +43,39 @@ Game.prototype.onClickEvent = function(event) {
 
     if (selectedCard) {
         if (!selectedCard.canClick(this.cards)) {
-            selectedCard = undefined;
+            this.clickedCards = []
             alert('nope');
+        } else {
+            this.clickedCards.push(selectedCard)
+
+            if (this.clickedCards.length === 2) {
+                this.comparedCards();
+                this.clickedCards = []
+            }
         }
     }
-    
+
+    return (selectedCard.id);
 };
 
-
-// Game.prototype.compare = function (a,b) {
-//     var card1 = new Object();
-//     var card2 = new Object();
-//         if (a = clicable) {
-//             card1 = a
-//         }
-
-//         if (b = clicable) {
-//             card2 = b
-//         }
-// }
-
+Game.prototype.comparedCards = function () {
+    if (this.clickedCards[0].id === this.clickedCards[1].id) {
+        this.cards = this.cards.filter(function(c) {
+            return (
+                c !== this.clickedCards[0] &&
+                c !== this.clickedCards[1]
+            )
+        }.bind(this))
+    } else {
+        alert('nope');
+    }
+};
 
 Game.prototype.drawAll = function() {
     this.cards.forEach(function(card) {
         card.draw();
     })
 };
-
 
 
 /*
@@ -94,32 +89,4 @@ Game.prototype.possibleMovement = function() {
     }
     
 };
-*/
-
-/*
-// Start/Reset Function
-Game.prototype.start = function () {
-    this.clear ();
-    this.drawAll ();
-    this.checkGameOver();
-    //.bind(this);
-};
-*/
-
-/*
-// Game Over
-Game.prototype.checkGameOver = function() {
-   
-    foreach ("todos los arrays") {
-        if (Game.prototype.possibleMovement) {
-            break;
-            
-        } else {
-            alert ("Oh! There aren't more possible moves. Would you like to try again?");
-        };
-    }
-    
-};
-
-// Array.prototype.includes( searchElement[, fromIndex ] )
 */

@@ -2,3 +2,7 @@ body {
     /* border: 1px solid red;  */
     margin: 0;
 }
+
+canvas {
+    border: 1px solid red;  
+}
