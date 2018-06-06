@@ -1,15 +1,16 @@
 
-function Card (ctx, id, x, y) {
+function Card (ctx, id, x, y, layer) {
   this.ctx = ctx;
   this.id = id;
-    this.img = new Image();
-    this.img.src = "img/" + this.id + ".png";
-    
-    this.x = x;
-    this.y = y;
+  this.layer = layer;
+  this.img = new Image();
+  this.img.src = "img/" + this.id + ".png";
+  
+  this.x = x;
+  this.y = y;
 
-    this.width = 60;
-    this.height= 80;
+  this.width = 60;
+  this.height= 80;
 };
 
 Card.prototype.collide = function (card) {
@@ -19,20 +20,14 @@ Card.prototype.collide = function (card) {
         (card.x === this.x + this.width && card.y === this.y) ||
         (card.x === this.x - card.width && card.y === this.y)
       )
-
-//   return !(this.x + this.width < card.x ||
-//          this.x > card.x + card.width ||
-//          this.y + this.height < card.y ||
-//          this.y > card.y + card.height)
 };
 
 Card.prototype.canClick = function (cards) {
   var neighbords = cards.filter(function(card) {
-    return card.collide(this) && this !== card;
+    return card.collide(this) && this !== card && this.layer === card.layer;
   }.bind(this));
 
-  console.log(neighbords);
-  return neighbords.length <= 3
+  return neighbords.length <= 3;
 };
 
 
@@ -49,4 +44,8 @@ Card.prototype.draw = function() {
       this.width,
       this.height
     )
+
+    this.ctx.globalAlpha = this.layer * 0.3;  
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.ctx.globalAlpha = 1.0;
 };

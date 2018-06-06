@@ -7,42 +7,16 @@ function Game(canvasElement) {
 
 
 Game.prototype.generateCards = function() {
-    var possibleIds = this.generatePosiblesIds()
-        .sort(function() {
-            return Math.random() - 0.5;
-    });
-    
-
-    for (var i = 0; i < this.ctx.canvas.width / 60 ; i++) {
-        for (var j = 0; j < this.ctx.canvas.height / 80 ; j++) {
-            var x = i * 60;
-            var y = j * 80;
-            var id =  possibleIds.pop();
-            var card = new Card (this.ctx, id, x, y)
-            this.cards.push(card);
-
-        }
-
+    for(var i = 0; i < 2; i++) {
+        this.cards = this.cards.concat(
+            new Layer(this.ctx, i).generate()
+        );
     }
-
-}
-// ---------------
-Game.prototype.generatePosiblesIds = function () {
-    var ids = [];
-
-    for(var i = 1; i <= 15; i++) {
-        for(var j = 1; j <= 8; j++) {
-            ids.push(i);
-        }
-    }
-
-    return ids;
-}
+};
 // ---------------
 
 Game.prototype.clear = function() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-
 }
 
 Game.prototype.start = function() {
@@ -56,7 +30,7 @@ Game.prototype.start = function() {
 Game.prototype.onClickEvent = function(event) {
     var x = event.clientX;
     var y = event.clientY;
-    var selectedCard = this.cards.find(function(card) {
+    var selectedCard = Object.create(this.cards).reverse().find(function(card) {
         return card.insideOf(x, y);
     });
 
