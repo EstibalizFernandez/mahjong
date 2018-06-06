@@ -9,7 +9,7 @@ window.onload = function() {
     var game = new Game(canvas);
     game.start();
     
-    document.onclick = function (event) {
+    canvas.onclick = function (event) {
       game.onClickEvent(event);
     }    
 };
