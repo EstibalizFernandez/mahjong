@@ -5,6 +5,11 @@ function Game(canvasElement) {
     this.generateCards();
 };
 
+Game.prototype.youWin = function () {
+    if (!this.cards.length) {
+        alert ("You win");
+    }
+};
 
 Game.prototype.generateCards = function() {
     for(var i = 0; i < 2; i++) {
@@ -13,7 +18,7 @@ Game.prototype.generateCards = function() {
         );
     }
 };
-// ---------------
+
 
 Game.prototype.clear = function() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
@@ -28,18 +33,19 @@ Game.prototype.start = function() {
 };
 
 Game.prototype.onClickEvent = function(event) {
+
     var x = event.clientX;
     var y = event.clientY;
     var selectedCard = Object.create(this.cards).reverse().find(function(card) {
-        return card.insideOf(x, y);
+        return card.insideOf(x, y);   
     });
 
     if (selectedCard) {
         if (!selectedCard.canClick(this.cards)) {
             this.clickedCards = []
-            alert('nope');
+            alert("You can't select this card");
         } else {
-            this.clickedCards.push(selectedCard)
+            this.clickedCards.push(selectedCard);
 
             if (this.clickedCards.length === 2) {
                 this.comparedCards();
@@ -50,7 +56,8 @@ Game.prototype.onClickEvent = function(event) {
 };
 
 Game.prototype.comparedCards = function () {
-    if (this.clickedCards[0].id === this.clickedCards[1].id) {
+
+    if (this.clickedCards[0].id === this.clickedCards[1].id && this.clickedCards[0] !== this.clickedCards[1]) {
         this.cards = this.cards.filter(function(card) {
             return (
                 card !== this.clickedCards[0] &&
@@ -58,7 +65,7 @@ Game.prototype.comparedCards = function () {
             )
         }.bind(this))
     } else {
-        alert('nope');
+        alert("You can't select the same card");
     }
 };
 
@@ -68,16 +75,3 @@ Game.prototype.drawAll = function() {
     })
 };
 
-
-/*
-// Help Function
-Game.prototype.possibleMovement = function() {
-    
-    foreach ("todos los arrays") {
-        if ("Sí quedan fichas iguales en los bordes") {
-            "mostrar los movimientos posibles";
-        }
-    }
-    
-};
-*/

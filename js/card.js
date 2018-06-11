@@ -45,7 +45,17 @@ Card.prototype.draw = function() {
       this.height
     )
 
-    this.ctx.globalAlpha = this.layer * 0.3;  
+    this.ctx.globalAlpha = this.layer * 0.3;
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
     this.ctx.globalAlpha = 1.0;
+};
+
+Card.prototype.drawOnCard = function() {
+  console.log(this.x, this.y, this.width, this.height)
+  this.ctx.save()
+  this.ctx.globalAlpha = 0.8;
+  this.ctx.fillStyle = "blue";
+  this.ctx.fillRect(this.x, this.y, this.width, this.height)
+  this.ctx.globalAlpha = 1.0;
+  this.ctx.restore()
 };
