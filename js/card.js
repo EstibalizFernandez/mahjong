@@ -5,6 +5,8 @@ function Card (ctx, id, x, y, layer) {
   this.layer = layer;
   this.img = new Image();
   this.img.src = "img/" + this.id + ".png";
+
+  // this.mySound = new sound("bounce.mp3");
   
   this.x = x;
   this.y = y;
@@ -59,3 +61,18 @@ Card.prototype.drawOnCard = function() {
   this.ctx.globalAlpha = 1.0;
   this.ctx.restore()
 };
+
+// Game.prototype.sound = function () {
+//   this.sound = document.createElement("audio");
+//   this.sound.src = src;
+//   this.sound.setAttribute("preload", "auto");
+//   this.sound.setAttribute("controls", "none");
+//   this.sound.style.display = "none";
+//   document.body.appendChild(this.sound);
+//   this.play = function(){
+//       this.sound.play();
+//   }
+//   this.stop = function(){
+//       this.sound.pause();
+//   }
+// };

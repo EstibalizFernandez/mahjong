@@ -14,8 +14,8 @@ function Layer(ctx, zIndex) {
   this.y = this.minY;
 }
 
-Layer.prototype.CARDS_PER_LAYER = [15, 6];
-Layer.prototype.CARDS_REPEAT = [8, 8];
+Layer.prototype.CARDS_PER_LAYER = [15, 6, 4];
+Layer.prototype.CARDS_REPEAT = [8, 8, 2];
 Layer.prototype.CARD_WIDTH = 60;
 Layer.prototype.CARD_HEIGHT = 80;
 

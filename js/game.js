@@ -3,16 +3,17 @@ function Game(canvasElement) {
     this.cards = [];
     this.clickedCards = [];
     this.generateCards();
+    
 };
 
 Game.prototype.youWin = function () {
     if (!this.cards.length) {
-        alert ("You win");
+        alert ("¡Has ganado! Invítate a una cerveza para celebrarlo");
     }
 };
 
 Game.prototype.generateCards = function() {
-    for(var i = 0; i < 2; i++) {
+    for(var i = 0; i < 3; i++) {
         this.cards = this.cards.concat(
             new Layer(this.ctx, i).generate()
         );
@@ -43,7 +44,7 @@ Game.prototype.onClickEvent = function(event) {
     if (selectedCard) {
         if (!selectedCard.canClick(this.cards)) {
             this.clickedCards = []
-            alert("You can't select this card");
+            alert("No puedes seleccionar una ficha totalmente rodeada");
         } else {
             this.clickedCards.push(selectedCard);
 
@@ -65,7 +66,7 @@ Game.prototype.comparedCards = function () {
             )
         }.bind(this))
     } else {
-        alert("You can't select the same card");
+        alert("Debes seleccionar 2 fichas con la misma imagen");
     }
 };
 
@@ -74,4 +75,3 @@ Game.prototype.drawAll = function() {
         card.draw();
     })
 };
-

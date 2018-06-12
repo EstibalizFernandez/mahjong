@@ -1,3 +1,33 @@
 body {
-    margin: 0;
+    font-size: 20px;
+    background-image: url("../img/background.jpg");
+    background-position: right top;
+}
+
+canvas {
+    float: left;
+}
+
+div {
+    width: 700px;
+    margin: 0 0 0 40px; 
+    float: left;
+    color: #fff;
+    font-weight: 600;
+}
+
+h1 {
+    color: #94001A;
+    display: block;
+    margin: 0 auto;
+    font-size: 60px;
+}
+
+h2,h3, p {
+    color: #000000;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 50px;
 }
